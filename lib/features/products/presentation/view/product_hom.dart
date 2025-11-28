@@ -96,18 +96,18 @@ val1.updatepro(ProductsModel(name:  newText,description:  newtext2,price:val, id
   }
   @override
   Widget build(BuildContext context) {
-final pro1=context.watch<ProductProvider>();
+final pro1=context.read<ProductProvider>();
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> const addpro11()));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> const Addpro11()));
         },
         child: const Icon(Icons.add),
       ),
       body: ListView.builder(itemCount: pro1.product.length, itemBuilder: (BuildContext context, int index) {
         final prolist=pro1.product[index];
-        return SizedBox(height: 110,width: double.infinity,
+        return SizedBox(height: 120,width: double.infinity,
           child: Card(child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Column(
@@ -117,6 +117,7 @@ final pro1=context.watch<ProductProvider>();
                   Text("productdescription:${prolist.description}"),
                   Text('productprice:${prolist.price}'),
                   Text('offeredprice:${prolist.offerPrice}'),
+                  Text('CreatedAt:${prolist.createdAt}'),
                   
                 ],
               ),

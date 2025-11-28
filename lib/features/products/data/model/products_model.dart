@@ -1,10 +1,13 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ProductsModel {
   String? id;
   String? name;
   String? description;
   double? price;
   double? offerPrice;
+  DateTime? createdAt;
 
   ProductsModel({
     this.id,
@@ -12,6 +15,7 @@ class ProductsModel {
     this.description,
     this.price,
     this.offerPrice,
+    this.createdAt,
   });
 
   ProductsModel copyWith({
@@ -20,6 +24,7 @@ class ProductsModel {
     String? description,
     double? price,
     double? offerPrice,
+    Timestamp? createdAt,
   }) {
     return ProductsModel(
       id: id ?? this.id,
@@ -27,7 +32,7 @@ class ProductsModel {
       description: description ?? this.description,
       price: price ?? this.price,
       offerPrice: offerPrice ?? this.offerPrice,
-    );
+      createdAt: createdAt != null ? createdAt.toDate() : this.createdAt,);
   }
 
   Map<String, dynamic> toMap() {
@@ -37,6 +42,7 @@ class ProductsModel {
       'description': description,
       'price': price,
       'offerPrice': offerPrice,
+      'createdAt': createdAt,
     };
   }
 
@@ -49,6 +55,7 @@ class ProductsModel {
       description: map['description'] != null ? map['description'] as String : null,
       price: map['price'] != null ? map['price'] as double : null,
       offerPrice: map['offerPrice'] != null ? map['offerPrice'] as double : null,
+      createdAt: map['createdAt'] != null ? map['createdAt'] as DateTime : DateTime.now(),
     );
   }
 

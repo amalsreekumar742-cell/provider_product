@@ -4,14 +4,14 @@ import 'package:demo1/general/helpers/formvalidations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class addpro11 extends StatefulWidget {
-  const addpro11({super.key});
+class Addpro11 extends StatefulWidget {
+  const Addpro11({super.key});
 
   @override
-  State<addpro11> createState() => _addpro11State();
+  State<Addpro11> createState() => _Addpro11State();
 }
 
-class _addpro11State extends State<addpro11> {
+class _Addpro11State extends State<Addpro11> {
 
   TextEditingController nameController=TextEditingController();
   TextEditingController descriptionController=TextEditingController();      
@@ -52,9 +52,7 @@ class _addpro11State extends State<addpro11> {
           decoration: InputDecoration(hintText: "Enter offer price"),),
             
                     SizedBox(height: 50, child: ElevatedButton(onPressed: () {
-                     if (formKey.currentState!.validate()) {
-  submit(context);
-  }
+                     if (formKey.currentState!.validate()) {submit(context);}
 
                     }, child: Text("Upload")))
       
@@ -74,7 +72,7 @@ class _addpro11State extends State<addpro11> {
   }
 
   final val=context.read<ProductProvider>();
-  val.addpro(ProductsModel(name: name, description: description, price: price,offerPrice: offer),);
+  val.addpro(ProductsModel(name: name, description: description, price: price,offerPrice: offer,createdAt: DateTime.now()),);
 
   Navigator.pop(context);
 }

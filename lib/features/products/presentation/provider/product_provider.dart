@@ -1,26 +1,29 @@
+import 'dart:developer';
 import 'package:demo1/features/products/data/model/products_model.dart';
-import 'package:demo1/features/products/repo/product_repo.dart';
-import 'package:demo1/general/failure.dart';
+import 'package:demo1/features/products/repo/i_product_impl.dart';
+import 'package:demo1/general/core/failures/main_failure.dart';
 import 'package:flutter/material.dart';
 
 class ProductProvider extends ChangeNotifier {
-  final ProductRepo rep;
+  final IProductImpl rep;
+  
   ProductProvider(this.rep);
   List<ProductsModel> product=[];
   bool isLoading=false;
-  Failure? error;
+  MainFailure? error;
 
 Future<void> fetchpro() async{
   isLoading=true;
   notifyListeners();
 
-  final result=await rep.getAllProducts();
-  result.fold((l) {
-    error=l;
+  final result=await rep.fetchProduct();
+  result.fold((err) {
+    error=err;
+    log("$error");
     isLoading=false;
     notifyListeners();
-  }, (r) {
-    product=r;
+  }, (result) {
+    product=result;
     isLoading=false;
     notifyListeners();
   });
@@ -36,16 +39,11 @@ Future<void> addpro(ProductsModel pro) async{
     error=l;
     isLoading=false;
     notifyListeners();
-  }, (r) {
-    product.add(r);
+  }, (result) {
+    product.add(result as ProductsModel );
     isLoading=false;
     notifyListeners();
   }); 
-
-
-
-
-
 
 }
 
@@ -59,8 +57,8 @@ Future<void> updatepro(ProductsModel pro) async{
     isLoading=false;
     notifyListeners();
   }, (r) {
-    final index=product.indexWhere((element) => element.id==r.id);
-    product[index]=r;
+    final index=product.indexWhere((element) => element.id==pro.id);
+    product[index]=r as ProductsModel;
     isLoading=false;
     notifyListeners();
   }); 
@@ -83,3 +81,4 @@ Future<void> deletepro(String id) async{
   }); 
 }
 }
+
